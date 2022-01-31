@@ -6,7 +6,7 @@
 
 ## 선언부 앞에 export 붙이기
 
-변수나 함수, 클래스를 선언할 때 맨 앞에 `export`를 붙이면 내보내기가 가능합니다. 
+변수나 함수, 클래스를 선언할 때 맨 앞에 `export`를 붙이면 내보내기가 가능합니다.
 
 아래 내보내기는 모두 유효합니다.
 
@@ -46,7 +46,7 @@ export function sayHi(user) {
 
 아래 예시에선 함수를 먼저 선언한 후, 마지막 줄에서 내보냅니다.
 
-```js  
+```js
 // 📁 say.js
 function sayHi(user) {
   alert(`Hello, ${user}!`);
@@ -63,7 +63,7 @@ export {sayHi, sayBye}; // 두 함수를 내보냄
 
 참고로 `export`문을 함수 선언부 위에 적어주는 것도 동일하게 동작합니다.
 
-## import *
+## import \*
 
 무언갈 가져오고 싶다면 아래와 같이 이에 대한 목록을 만들어 `import {...}`안에 적어주면 됩니다.
 
@@ -93,22 +93,25 @@ say.sayBye('John');
 
 이렇게 하는 데는 몇 가지 이유가 있습니다.
 
-1. [웹팩(webpack)](http://webpack.github.io)과 같은 모던 빌드 툴은 로딩 속도를 높이기 위해 모듈들을 한데 모으는 번들링과 최적화를 수행합니다. 이 과정에서 사용하지 않는 리소스가 삭제되기도 합니다. 
+1. [웹팩(webpack)](http://webpack.github.io)과 같은 모던 빌드 툴은 로딩 속도를 높이기 위해 모듈들을 한데 모으는 번들링과 최적화를 수행합니다. 이 과정에서 사용하지 않는 리소스가 삭제되기도 합니다.
 
-    아래와 같이 프로젝트에 서드파티 라이브러리인 `say.js`를 도입하였다 가정합시다. 이 라이브러리엔 수 많은 함수가 있습니다.
-    ```js
-    // 📁 say.js
-    export function sayHi() { ... }
-    export function sayBye() { ... }
-    export function becomeSilent() { ... }
-    ```
+   아래와 같이 프로젝트에 서드파티 라이브러리인 `say.js`를 도입하였다 가정합시다. 이 라이브러리엔 수 많은 함수가 있습니다.
 
-    현재로선 `say.js`의 수 많은 함수 중 단 하나만 필요하기 때문에, 이 함수만 가져와 보겠습니다.
-    ```js
-    // 📁 main.js
-    import {sayHi} from './say.js';
-    ```
-    빌드 툴은 실제 사용되는 함수가 무엇인지 파악해, 그렇지 않은 함수는 최종 번들링 결과물에 포함하지 않습니다. 이 과정에서 불필요한 코드가 제거되기 때문에 빌드 결과물의 크기가 작아집니다. 이런 최적화 과정은 '가지치기(tree-shaking)'라고 불립니다.
+   ```js
+   // 📁 say.js
+   export function sayHi() { ... }
+   export function sayBye() { ... }
+   export function becomeSilent() { ... }
+   ```
+
+   현재로선 `say.js`의 수 많은 함수 중 단 하나만 필요하기 때문에, 이 함수만 가져와 보겠습니다.
+
+   ```js
+   // 📁 main.js
+   import { sayHi } from "./say.js";
+   ```
+
+   빌드 툴은 실제 사용되는 함수가 무엇인지 파악해, 그렇지 않은 함수는 최종 번들링 결과물에 포함하지 않습니다. 이 과정에서 불필요한 코드가 제거되기 때문에 빌드 결과물의 크기가 작아집니다. 이런 최적화 과정은 '가지치기(tree-shaking)'라고 불립니다.
 
 2. 어떤 걸 가지고 올지 명시하면 이름을 간결하게 써줄 수 있습니다. `say.sayHi()`보다 `sayHi()`가 더 간결하네요.
 3. 어디서 어떤 게 쓰이는지 명확하기 때문에 코드 구조를 파악하기가 쉬워 리팩토링이나 유지보수에 도움이 됩니다.
@@ -117,7 +120,7 @@ say.sayBye('John');
 
 `as`를 사용하면 이름을 바꿔서 모듈을 가져올 수 있습니다.
 
-`sayHi`를 `hi`로, `sayBye`를 `bye`로 이름을 바꿔서 가져와 봅시다. 
+`sayHi`를 `hi`로, `sayBye`를 `bye`로 이름을 바꿔서 가져와 봅시다.
 
 ```js
 // 📁 main.js
@@ -162,7 +165,7 @@ say.*!*bye*/!*('John'); // Bye, John!
 
 그런데 이렇게 모듈을 만들다 보면 자연스레 파일 개수가 많아질 수밖에 없습니다. 그렇더라도 모듈 이름을 잘 지어주고, 폴더에 파일을 잘 나눠 프로젝트를 구성하면 코드 탐색이 어렵지 않으므로 이는 전혀 문제가 되지 않습니다.
 
-모듈은 `export default`라는 특별한 문법을 지원합니다. `export default`를 사용하면 '해당 모듈엔 개체가 하나만 있다'는 사실을 명확히 나태낼 수 있습니다.
+모듈은 `export default`라는 특별한 문법을 지원합니다. `export default`를 사용하면 '해당 모듈엔 개체가 하나만 있다'는 사실을 명확히 나타낼 수 있습니다.
 
 내보내고자 하는 개체 앞에 `export default`를 붙여봅시다.
 
@@ -188,10 +191,10 @@ new User('John');
 
 중괄호 없이 클래스를 가져오니 더 깔끔해 보이네요. 모듈을 막 배우기 시작한 사람은 중괄호를 빼먹는 실수를 자주 합니다. named export 한 모듈을 가져오려면 중괄호가 필요하고, default export 한 모듈을 가져오려면 중괄호가 필요하지 않다는 걸 기억해 실수를 방지합시다.
 
-| named export | default export |
-|--------------|----------------|
+| named export              | default export                    |
+| ------------------------- | --------------------------------- |
 | `export class User {...}` | `export default class User {...}` |
-| `import {User} from ...` | `import User from ...`|
+| `import {User} from ...`  | `import User from ...`            |
 
 사실 named export와 default export를 같은 모듈에서 동시에 사용해도 문제는 없습니다. 그런데 실무에선 이렇게 섞어 쓰는 사례가 흔치 않습니다. 한 파일엔 named export나 default export 둘 중 하나만 사용합니다.
 
@@ -206,14 +209,15 @@ export default class { // 클래스 이름이 없음
 ```
 
 ```js
-export default function(user) { // 함수 이름이 없음
+export default function (user) {
+  // 함수 이름이 없음
   alert(`Hello, ${user}!`);
 }
 ```
 
 ```js
 // 이름 없이 배열 형태의 값을 내보냄
-export default ['Jan', 'Feb', 'Mar','Apr', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+export default ["Jan", "Feb", "Mar", "Apr", "Aug", "Sep", "Oct", "Nov", "Dec"];
 ```
 
 `export default`는 파일당 하나만 있으므로 이 개체를 가져오기 하려는 모듈에선 중괄호 없이도 어떤 개체를 가지고 올지 정확히 알 수 있으므로 이름이 없어도 괜찮습니다.
@@ -224,7 +228,7 @@ export default ['Jan', 'Feb', 'Mar','Apr', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 export class { // 에러! (default export가 아닌 경우엔 이름이 꼭 필요합니다.)
   constructor() {}
 }
-```     
+```
 
 ### 'default' name
 
@@ -238,7 +242,7 @@ function sayHi(user) {
 }
 
 // 함수 선언부 앞에 'export default'를 붙여준 것과 동일합니다.
-export {sayHi as default};
+export { sayHi as default };
 ```
 
 흔치 않지만 `user.js`라는 모듈에 'default' export 하나와 다수의 named export가 있다고 해봅시다.
@@ -269,10 +273,10 @@ new User('John');
 
 ```js
 // 📁 main.js
-import * as user from './user.js';
+import * as user from "./user.js";
 
 let User = user.default; // default export
-new User('John');
+new User("John");
 ```
 
 ### default export의 이름에 관한 규칙
@@ -282,15 +286,15 @@ named export는 내보냈을 때 사용한 이름 그대로 가져오므로 관�
 그런데 아래와 같이 내보내기 할 때 쓴 이름과 가져오기 할 때 쓸 이름이 동일해야 한다는 제약이 있죠.
 
 ```js
-import {User} from './user.js';
+import { User } from "./user.js";
 // import {MyUser}은 사용할 수 없습니다. 반드시 {User}이어야 합니다.
 ```
 
 named export와는 다르게 default export는 가져오기 할 때 개발자가 원하는 대로 이름을 지정해 줄 수 있습니다.
 
 ```js
-import User from './user.js'; // 동작
-import MyUser from './user.js'; // 동작
+import User from "./user.js"; // 동작
+import MyUser from "./user.js"; // 동작
 // 어떤 이름이든 에러 없이 동작합니다.
 ```
 
@@ -311,12 +315,12 @@ import func from '/path/to/func.js';
 
 ## 모듈 다시 내보내기
 
-`export ... from ...` 문법을 사용하면 가져온 개체를 즉시 '다시 내보내기(re-export)' 할 수 있습니다. 이름을 바꿔서 다시 내보낼 수 있는 것이죠. 예시를 살펴봅시다. 
+`export ... from ...` 문법을 사용하면 가져온 개체를 즉시 '다시 내보내기(re-export)' 할 수 있습니다. 이름을 바꿔서 다시 내보낼 수 있는 것이죠. 예시를 살펴봅시다.
 
 ```js
-export {sayHi} from './say.js'; // sayHi를 다시 내보내기 함
+export { sayHi } from "./say.js"; // sayHi를 다시 내보내기 함
 
-export {default as User} from './user.js'; // default export를 다시 내보내기 함
+export { default as User } from "./user.js"; // default export를 다시 내보내기 함
 ```
 
 다시 내보내기가 왜 필요한건지 의문이 드실 겁니다. 유스 케이스를 통해 다시 내보내기가 실무에서 언제 사용되는지 알아봅시다.
@@ -324,9 +328,10 @@ export {default as User} from './user.js'; // default export를 다시 내보내
 NPM을 통해 외부에 공개할 '패키지(package)'를 만들고 있다고 가정합시다. 이 패키지는 수많은 모듈로 구성되어있는데, 몇몇 모듈은 외부에 공개할 기능을, 몇몇 모듈은 이러한 모듈을 도와주는 '헬퍼' 역할을 담당하고 있다고 합시다.
 
 패키지 구조는 아래와 같습니다.
+
 ```
 auth/
-    index.js  
+    index.js
     user.js
     helpers.js
     tests/
@@ -340,10 +345,10 @@ auth/
 진입점 역할을 하는 '주요 파일'인 `auth/index.js`을 통해 기능을 외부에 노출시키면 이 패키지를 사용하는 개발자들은 아래와 같은 코드로 해당 기능을 사용할 겁니다.
 
 ```js
-import {login, logout} from 'auth/index.js'
+import { login, logout } from "auth/index.js";
 ```
 
-이때 우리가 만든 패키지를 사용하는 외부 개발자가 패키지 안의 파일들을 뒤져 내부 구조를 건드리게 하면 안 됩니다. 그러려면 공개할 것만 `auth/index.js`에 넣어 내보내기 하고 나머는 숨기는 게 좋겠죠. 
+이때 우리가 만든 패키지를 사용하는 외부 개발자가 패키지 안의 파일들을 뒤져 내부 구조를 건드리게 하면 안 됩니다. 그러려면 공개할 것만 `auth/index.js`에 넣어 내보내기 하고 나머는 숨기는 게 좋겠죠.
 
 이때 내보낼 기능을 패키지 전반에 분산하여 구현한 후, `auth/index.js`에서 이 기능들을 가져오고 이를 다시 내보내면 원하는 바를 어느 정도 달성할 수 있습니다.
 
@@ -389,15 +394,16 @@ export default class User {
 
 1. `User`를 `export User from './user.js'`로 다시 내보내기 할 때 문법 에러가 발생합니다. 어디가 잘못된 걸까요?
 
-    default export를 다시 내보내려면 위 예시처럼 `export {default as User}`를 사용해야 합니다.
+   default export를 다시 내보내려면 위 예시처럼 `export {default as User}`를 사용해야 합니다.
 
 2. `export * from './user.js'`를 사용해 모든 걸 한 번에 다시 내보내면 default export는 무시되고, named export만 다시 내보내집니다.
 
-    두 가지를 동시에 다시 내보내고 싶다면 두 문을 동시에 사용해야 합니다.
-    ```js
-    export * from './user.js'; // named export를 다시 내보내기
-    export {default} from './user.js'; // default export를 다시 내보내기
-    ```
+   두 가지를 동시에 다시 내보내고 싶다면 두 문을 동시에 사용해야 합니다.
+
+   ```js
+   export * from "./user.js"; // named export를 다시 내보내기
+   export { default } from "./user.js"; // default export를 다시 내보내기
+   ```
 
 default export를 다시 내보낼 땐 이런 특이한 상황도 인지하고 있다가 처리해줘야 하므로 몇몇 개발자들은 default export를 다시 내보내는것을 선호하지 않습니다.
 
@@ -431,12 +437,13 @@ default export를 다시 내보낼 땐 이런 특이한 상황도 인지하고 �
 `import/export` 문은 스크립트의 맨 위나 맨 아래에 올 수 있는데 이 둘엔 차이가 없습니다.
 
 따라서 아래 스크립트는 문제없이 잘 동작합니다.
+
 ```js
 sayHi();
 
 // ...
 
-import {sayHi} from './say.js'; // import 문을 파일 맨 아래에 위치시킴
+import { sayHi } from "./say.js"; // import 문을 파일 맨 아래에 위치시킴
 ```
 
 대개는 편의상 스크립트 맨 위에 import 문을 위치시킵니다.
@@ -444,9 +451,10 @@ import {sayHi} from './say.js'; // import 문을 파일 맨 아래에 위치시�
 **import/export 문은 블록 `{...}`안에선 동작하지 않는다는 점에 유의하시길 바랍니다.**
 
 조건을 충족하면 모듈을 가져오려는 의도로 작성된 아래 코드는 동작하지 않습니다.
+
 ```js
 if (something) {
-  import {sayHi} from "./say.js"; // 에러: import 문은 최상위 레벨에 위치해야 합니다.
+  import { sayHi } from "./say.js"; // 에러: import 문은 최상위 레벨에 위치해야 합니다.
 }
 ```
 
